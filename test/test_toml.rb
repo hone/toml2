@@ -106,4 +106,10 @@ class TestToml < Test::Unit::TestCase
       type = "pug"
     TOML
   end
+
+  def test_false
+    assert_equal({key: false}, TOML.load(<<-'TOML'))
+      key = false
+    TOML
+  end
 end

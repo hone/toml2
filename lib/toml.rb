@@ -31,7 +31,7 @@ module TOML
       seen[obj] = true
       case obj
       when OpenStruct; hashize(obj.instance_variable_get(:@table), seen)
-      when Hash; Hash[obj.reject{|k,_|k[0, 2] == "__"}.map { |k,v| v = hashize(v, seen) and [k, v] }.compact]
+      when Hash; Hash[obj.reject{|k,_|k[0, 2] == "__"}.map { |k,v| v = hashize(v, seen); v.nil? ? nil : [k, v] }.compact]
       when Array; obj.map { |v| hashize(v, seen) }.compact
       when Fixnum, Float, true, false, nil; seen[obj] = false; obj
       else obj
